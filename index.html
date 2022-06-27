@@ -5,15 +5,53 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    label {
+      cursor: pointer;
+      font-family: sans-serif;
+      display: block;
+      border: 1px solid #000;
+      width: 180px;
+      padding: 0.5rem 0.5rem;
+    }
+
+    #photo-upload {
+      visibility: hidden;
+    }
+
+    .photo-container {
+      width: 196px;
+      min-height: 180px;
+      border: 1px solid #000;
+      margin-bottom: 1rem;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .photo-container img {
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
   
-  <div id="img-container">
-
+  <div class="photo-container">
+    <img id="photo-preview" src="" alt="you, hopefully">
   </div>
-  <input type="file" accept="image/*">
+  <label for="photo-upload">Add your photo</label>
+  <input id="photo-upload" type="file" accept="image/*">
   <script>
-
+    const photoUpload = document.querySelector("#photo-upload");
+    const photoPreview = document.querySelector('#photo-preview');
+    photoUpload.onchange = function() {
+      const reader = new FileReader();
+      const file = this.files[0];
+      reader.onload = function() {
+        photoPreview.src = reader.result;
+      }
+      if (file) reader.readAsDataURL(file);
+    }
   </script>
 </body>
 </html>
